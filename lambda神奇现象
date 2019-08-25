@@ -1,0 +1,14 @@
+int main()
+{
+int val = 3;
+	auto f = [val]()mutable{return ++val; };
+	int a = f();
+	int b = f();
+	cout << a << endl
+		<< b << endl;
+   cout << f() << endl << f() << endl << f() << endl;
+	return 0;
+ }
+ 
+ //以上代码运行结果是4,5,8,7,6
+ //为什么会出现这种现象，f（）的执行顺序？？？
