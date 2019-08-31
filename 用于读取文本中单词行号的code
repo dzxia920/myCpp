@@ -1,0 +1,68 @@
+//存在的问题：1读取单词行号时会重复读取（用set可以改进吗？）！
+              2.读取的单词带标点！
+
+#include<iostream>
+#include<map>
+#include<string>
+#include<list>
+#include<vector>
+#include<fstream>
+#include<sstream>
+
+void Print(const std::map<std::string, std::list<std::size_t>>& WordLines)
+{
+	//范围for语句里的循环变量最好是引用类型，事实上只有引用类型才能执行写操作！
+	for (auto &i : WordLines)
+	{
+		std::cout << i.first<<"\n";
+		for (auto &k : i.second)
+			std::cout << k << " ";
+		std::cout << std::endl;
+	}
+}
+
+int main()
+{
+	std::map<std::string, std::list<std::size_t>> WordLines;
+	std::string word;
+	
+	std::list<std::size_t> ilist;
+	//文件地址中的\一定要多加一个避免转义！
+	std::ifstream in("C:\\Users\\Lenovo\\Desktop\\China.txt");
+	if (in)
+	{
+		std::string line;
+		std::size_t linenum = 1;
+		
+		while (getline(in, line))
+		{
+
+			std::istringstream input(line);
+			while (input >> word)
+			{
+				auto ret = WordLines.insert({ word, ilist });
+				ret.first->second.push_back(linenum);
+				if (!ret.second)
+					//insert操作的第一个参数要是一个迭代器！
+					ret.first->second.push_back(linenum);
+				
+			}
+			++linenum;
+		}
+		Print(WordLines);
+	}
+
+	else std::cerr << "failed to open!" << std::endl;
+
+	/*std::map<std::string, std::list<std::size_t>> wordline;
+	std::list<std::size_t> ilist = { 0, 1, 2 };
+	wordline.insert({ "c++", ilist });
+	wordline.insert({ "python", ilist });
+	Print(wordline);*/
+
+	//std::map<std::vector<int>, int> WordLine2;
+	
+	//虽然编译通过，但map里的关键字必须定义一个严格弱序才能用于比较！！
+	std::map<std::list<int>, int> WordLine3;
+	return 0;
+}
