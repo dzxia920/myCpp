@@ -1,0 +1,30 @@
+  fstream read("Record.CSV", ios::in);
+	string record;
+	//判断文件是否能打开
+	if (!read.is_open())
+	{
+		cout << "文件未能正常打开！" << endl;
+		return 0;
+	}
+  
+  //方法一：用peek()读取，看其是否为EOF
+	char ch = read.peek();
+	if (ch==EOF)
+	{
+		cout << "文件为空！" << endl;
+		read.close();
+	}
+  //方法二：用 [get() 或者 read>>ch ]再putback(ch)的方法，但是要求文件流既能读也能写
+	char ch = read.get();
+  //char ch;
+  //read >> ch;
+	if (ch==EOF)
+	{
+		cout << "文件为空！" << endl;
+		read.close();
+	}
+  read.putback(ch);
+  
+  
+  
+	read.close();
