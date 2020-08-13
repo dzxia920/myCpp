@@ -8,23 +8,29 @@
 	}
   
   //方法一：用peek()读取，看其是否为EOF
-	char ch = read.peek();
+	char ch = read.peek();  	//也可以是int char;
 	if (ch==EOF)
 	{
 		cout << "文件为空！" << endl;
 		read.close();
 	}
-  //方法二：用 [get() 或者 read>>ch ]再putback(ch)的方法，但是要求文件流既能读也能写
-	char ch = read.get();
-  //char ch;
-  //read >> ch;
+  //方法二：用 get() 再 putback(ch)的方法，但是要求文件流既能读也能写
+	char ch = read.get();		//也可以是int char;
 	if (ch==EOF)
 	{
 		cout << "文件为空！" << endl;
 		read.close();
 	}
-  read.putback(ch);
+	 read.putback(ch);
+	 read.close();
   
-  
-  
+  //方法三：用read>> ch ,再判断文件流的eof(),记住若文件不为空，还是得恢复字符
+  	 char ch；
+	 read >> ch;
+	 if(read.eof())
+	 {
+	 	cout << "文件为空！" << endl;
+		read.close();
+	 }
+  	 read.putback(ch);
 	read.close();
