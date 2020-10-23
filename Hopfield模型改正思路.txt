@@ -1,0 +1,8 @@
+1.给定测站高程hs，利用标准气象元素法计算t,P,RH
+	ComputeMeteoElem(t, P, RH, hs);
+2.计算水汽压es
+	es = ComputeEs(RH, Ts);
+3.计算对流层延迟改正deltas，给定hs、E、es、Ts（由摄氏度t转成热力学温度）Ts=t+273.15
+	delta_s = HopfieldCals(E, P, es, Ts, hs);
+
+40yearlhomeg,3000ldsh
